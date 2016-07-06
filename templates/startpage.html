@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/static/main.css" />
+    <title>My Project</title>
+    <style type="text/css">      
+      .lnk{ font-weight: bold; }
+    </style>
+
+  </head>
+
+  <body>
+
+      <div class="log">
+        <div>
+          {% if not user %}      
+          <a href="/login">login</a> | <a href="/signup">signup</a>          
+          
+          {% else %}
+
+          {{user}} (<a href="/logout">logout</a>)
+          {% endif %}
+          </div>
+          <br>      
+      </div>
+
+
+    <h2>
+      Hello, check my project.
+    </h2>
+    
+    <br> 
+    <a href="/blog" class="lnk">
+      To see the blog
+    </a>
+
+    <br> 
+    <a href="/wiki" class="lnk">
+      To see the wiki
+    </a>
+
+    <br> 
+    <a href="/cipher" class="lnk">
+      To see the cipher app
+    </a>
+    
+    <br> 
+    <a href="/blog.json" class="lnk">
+      To see the blog's JSON from the API
+    </a>
+    <br>
+    
+    
+  </body>
+
+</html>

@@ -1,0 +1,37 @@
+{% extends "blogbase.html" %}
+
+{% block content %}
+  
+  <div class="log">
+    <div>
+      {% if not user %}      
+      <a href="/login">login</a> | <a href="/signup">signup</a>
+      <br>
+      <a href="/blog">Go to Blog</a> 
+      {% else %}
+       
+      {{user}} (<a href="/logout">logout</a>)
+      <br>
+      <a href="/blog">Go to Blog</a> 
+      {% endif %}
+      </div>
+      <br>      
+  </div>
+
+
+    <form method="post">
+      <label>
+        <div>subject</div>
+        <input type="text" name="subject" value="{{subject}}">
+      </label>
+
+      <label>
+        <div>blog</div>
+        <textarea name="content">{{content}}</textarea>
+      </label>
+
+      <div class="error">{{error}}</div>
+
+      <input type="submit">
+    </form>
+{% endblock %}

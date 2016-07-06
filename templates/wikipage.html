@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="log">
+    <div>
+      {% if not user %}
+      <a href="/wiki/_history{{url}}">history</a> &nbsp;&nbsp;&nbsp; 
+      <a href="/login">login</a> | <a href="/signup">signup</a>
+      {% else %}
+      <a href="/wiki/_edit{{path}}">edit</a> | <a href="/wiki/_history{{path}}">history</a> &nbsp;&nbsp;&nbsp; {{user}} (<a href="/logout">logout</a>)
+      {% endif %}
+      </div>
+      <br>      
+</div>
+
+<div id="content">
+  <h2>{{ path }} </h2>
+  <p> {{content | safe }} </p>
+</div>
+{% endblock %}

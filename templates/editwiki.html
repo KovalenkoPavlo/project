@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="log">
+    <div>
+      {% if not user %}
+      <a href="/login">login</a> | <a href="/signup">signup</a>
+      {% else %}
+      {{user}} (<a href="/logout">logout</a>)
+      {% endif %}
+      </div>
+      <br>      
+</div>
+
+<div id="content">
+  <h2>Edit {{ path }}</h2>
+  <form method="post">
+    <label>
+      <div>content</div>
+      <textarea name="content">{{content}}</textarea>
+    </label>
+    <div class="error">{{error}}</div>
+    <input type="submit" />
+  </form>
+</div>
+{% endblock %}

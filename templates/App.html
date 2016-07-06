@@ -1,0 +1,101 @@
+<html>
+<head>
+<title> Hello </title>
+<link rel="stylesheet" href="../static/styles.css">
+<script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type='text/javascript' src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
+<script type='text/javascript' src="http://cdn3.devexpress.com/jslib/13.1.5/js/dx.chartjs.js"></script>
+
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+    $('.button').click(function(){
+        var text = $('#newtext').val();
+        var shift = $('#rotation').val();
+        var value= $(this).val();
+        var data={"click" : {"text": text, "shift": shift, "value" : value} };
+        $.ajax({
+            url: '/cipher',
+            type: 'POST',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function(data){
+                $('#newtext2').val(data.text);                
+
+                var dataSource = data.message2;
+
+                $("#chartContainer").dxChart({
+                    dataSource: dataSource,
+                    title: "Symbols frequency",
+                    series: {
+                        name: "Symbol",
+                        type: "bar",
+                        argumentField: "breed",
+                        valueField: "number",       
+                    },
+                    legend: { visible: false },    
+                });
+                               
+            }
+       });
+       return false;
+    });
+    
+    $('#newtext').keyup(function(){
+        text = $('#newtext').val();
+        data = { "press" : {"text" : text } };
+        $.ajax({
+            url: '/cipher',
+            type: 'POST',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function(data){
+                $('#message').text("Do you mean: " + data.text + " ?");
+            }
+        });
+        return false;
+    });
+
+});
+
+</script>
+</head>
+<body>
+
+<div class="main">
+    <div class="top">Enter you cipher in textarea</div>
+    <div class="form" id="form" >
+        <div class="textblock">
+            <div>
+                <textarea name="text" id="newtext" placeholder="Enter the cipher here"></textarea>
+            </div>
+        </div>
+        <div class="btnblock">
+            <div>
+                <div style="text-align:center;">
+                    <input type="text" name="rotation" id= "rotation" placeholder="Enter a rotation number here"/>
+                </div>
+                
+                <div style="margin: 20px;text-align: center;">
+                    <button class="button" name="button" value='encrypt' >-></button>
+                    <button class="button" name="button" value='decrypt' ><-</button>   
+                </div>
+            </div>
+        </div>
+        <div  class="textblock">
+            <div>
+                <textarea name="text2" id="newtext2" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div id="chartContainer" ></div>
+
+    <div class="message">
+        <p id="message"></p>        
+    </div>
+</div>
+
+</body>
+</html>
