@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %} Wiki {% endblock %}
+
+{% block content %}
+
+<div class="log">
+    <div>
+      {% if not user %}
+      <a href="/login">login</a> | <a href="/signup">signup</a>
+      {% else %}
+      {{user}} (<a href="/logout">logout</a>)
+      {% endif %}
+      </div>
+      <br>      
+</div>
+
+<h2 style="position:absolute; left: 40px; top: 40px;"> Check my Wiki </h2>
+
+<div class="links col-md-2 col-md-offset-1 text-left">
+  <h2> All Pages </h2>
+  {% for wiki in wikis %}
+  <h4>
+    <a href="/wiki{{wiki.path}}" >{{wiki.path}}</a>
+  </h4>  
+  {% endfor %}
+</div>
+
+
+
+{% endblock %}
+
+
+

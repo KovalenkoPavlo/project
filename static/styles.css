@@ -1,5 +1,5 @@
 
-.main{width: 1024px;margin:30px auto;}
+.main{width: 1024px;margin:30px auto; margin-top: 60px;}
 .top{border-bottom: 2px solid grey;line-height: 36px; text-align: center;}
 .form>div{
     float: left;

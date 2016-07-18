@@ -1,4 +1,8 @@
-{% extends "blogbase.html" %}
+{% extends "base.html" %}
+
+{% block title %}
+Blog
+{% endblock %}
 
 {% block content %}
   
@@ -11,27 +15,32 @@
       {% else %}
        
       {{user}} (<a href="/logout">logout</a>)
-      <br>
-      <a href="/blog">Go to Blog</a> 
+      
       {% endif %}
       </div>
       <br>      
   </div>
 
+  <div>
+    <a href="/blog" class="link"> <h1 class="text-center">Blog</h1> </a>
+  </div>
 
-    <form method="post">
-      <label>
-        <div>subject</div>
-        <input type="text" name="subject" value="{{subject}}">
-      </label>
+  <form method="post">    
 
-      <label>
-        <div>blog</div>
-        <textarea name="content">{{content}}</textarea>
-      </label>
+    <div class="form-group">
+      <label for="subject">Subject</label>
+      <input class="form-control" id="subject" name="subject" value="{{subject}}">
+    </div>
 
-      <div class="error">{{error}}</div>
+    <div class="form-group">
+      <label for="content">Content</label>      
+      <textarea class="form-control" rows="8" id="content" name="content">{{content}}</textarea>
+    </div>
 
-      <input type="submit">
-    </form>
+    <div class="error">{{error}}</div>
+    <input type="submit" class="btn btn-success" value="Submit">
+  </form>
+
+
+
 {% endblock %}

@@ -1,76 +1,77 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-<html>
-  <head>
-    <title>Sign Up</title>
-    <style type="text/css">
-      .label {text-align: right}
-      .error {color: red}
-      .link{ font-weight: bold;}
-    </style>
+{% block title %}
+SignUp
+{% endblock %}
 
-  </head>
+{% block content %}
 
-  <body>
-    <a href="/login" class="link">
+    <a href="/login" class="log">
       Login
     </a>
+    
+    <div class= "container">
+      <div class= "col-md-1 col-md-offset-3">
+        <h3>SignUp </h3>
+      </div>
+    </div>
 
-    <h2>Signup</h2>
-    <form method="post">
-      <input type="hidden" name="next_url" value="{{next_url}}">
-      <table>
-        <tr>
-          <td class="label">
-            Username
-          </td>
-          <td>
-            <input type="text" name="username" value="{{username}}">
-          </td>
-          <td class="error">
-            {{error_username}}
-          </td>
-        </tr>
+    <div class="container">
+      <form method="post" role="form" class="form-horizontal">
+        <input type="hidden" name="next_url" value="{{next_url}}">
 
-        <tr>
-          <td class="label">
-            Password
-          </td>
-          <td>
-            <input type="password" name="password" value="">
-          </td>
-          <td class="error">
-            {{error_password}}
-          </td>
-        </tr>
+        <div class="form-group">
+          <label for="username" class="control-label col-md-2">Username:</label>
+          <div class="col-md-4">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <span class="glyphicon glyphicon-user"></span>
+              </div>
+              <input type="text" class="form-control" name="username" 
+              id="username" placeholder="Username" value="{{username}}"/>
+            </div>
+          </div>
+          <div class="col-md-3 error">{{error_username}}</div>
+        </div>
 
-        <tr>
-          <td class="label">
-            Verify Password
-          </td>
-          <td>
-            <input type="password" name="verify" value="">
-          </td>
-          <td class="error">
-            {{error_verify}}
-          </td>
-        </tr>
+        <div class="form-group">        
+          <label for="password" class="control-label col-md-2"> Password: </label>        
+          <div class="col-md-4">
+            <input type="password" class="form-control " name="password" id="password" placeholder="Password" value="{{password}}"/>
+          </div>
+          <div class="col-md-3 error">{{error_password}}</div>
+        </div>
 
-        <tr>
-          <td class="label">
-            Email (optional)
-          </td>
-          <td>
-            <input type="text" name="email" value="{{email}}">
-          </td>
-          <td class="error">
-            {{error_email}}
-          </td>
-        </tr>
-      </table>
+        <div class="form-group">        
+          <label for="verify" class="control-label col-md-2"> Verify Password: </label>        
+          <div class="col-md-4">
+            <input type="password" class="form-control " name="verify" id="verify" placeholder="Verify password"/>
+          </div>
+          <div class="col-md-3 error">{{error_verify}}</div>
+        </div>
 
-      <input type="submit">
-    </form>    
-  </body>
+        <div class="form-group">        
+        <label for="email" class="control-label col-md-2"> Email (optional): </label>        
+        <div class="col-md-4">
+          <input type="email" class="form-control " name="email" id="email" placeholder="Email" value="{{email}}"/>          
+        </div> 
+        <div class="col-md-3 error">{{error_email}}</div>       
+      </div>
 
-</html>
+        <div class="form-group">
+          <div class="control-label col-md-3 error">
+            {{error}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input type="submit" class="btn btn-success col-md-2 col-md-offset-3" value="Submit">
+        </div>
+      </form>
+    </div>
+
+    <script src='../scripts/jquery-2.2.2.min.js'></script>
+    <script src='../scripts/bootstrap.min.js'></script>
+
+
+{% endblock %}

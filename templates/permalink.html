@@ -1,23 +1,25 @@
-{% extends "blogbase.html" %}
+{% extends "base.html" %}
+
+{% block title %} Blog {% endblock %}
 
 {% block content %}
 	<div class="log">
     <div>
       {% if not user %}      
       <a href="/login">login</a> | <a href="/signup">signup</a>
-      <br>
-      <a href="/blog">Go to Blog</a> 
+
       {% else %}
        
       {{user}} (<a href="/logout">logout</a>)
-      <br>
-      <a href="/blog">Go to Blog</a> 
+      
       {% endif %}
       </div>
       <br>      
   </div>
 
-
+  <div>
+    <a href="/blog" class="link"> <h1 class="text-center">Blog</h1> </a>
+  </div>
   {{post.render() | safe}}
 
   <div class="age">

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %} Wiki {% endblock %}
+
 {% block content %}
 
 <div class="log">
@@ -14,8 +16,16 @@
       <br>      
 </div>
 
-<div id="content">
-  <h2>{{ path }} </h2>
-  <p> {{content | safe }} </p>
+
+<div>
+  <a href="/wiki" class="link"> <h1 class="text-center">Wiki</h1> </a>
 </div>
+
+<div class="links col-md-1 col-md-offset-1 text-left" >
+  <div style="position:absolute; top: 70px;">
+    <h2>{{ path }} </h2>
+    <p> {{content | safe }} </p>
+  </div>
+</div>
+
 {% endblock %}

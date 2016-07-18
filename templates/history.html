@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block page %} CS 253 Wiki | Edit {{ page }}{% endblock %}
+
+{% block title %} Wiki {% endblock %}
+
 {% block content %}
 
 <div class="log">
@@ -13,33 +15,29 @@
       <br>      
 </div>
 
-<table >
-    <thead>
-      <tr>
-        <th>Version</th>
-        <th>Created</th>
-        <th>Content</th>
-        <th>View</th>
-        <th>Edit</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for wiki in content %}
-      <tr class="wiki">
-        <td>{{ wiki.version }}</td>
-        <td>{{ wiki.created.strftime("%c") }}</td>
-        <td>{{ wiki.content[:100] }}</td>
-        <td><a href="/wiki{{ wiki.path }}?v={{ wiki.version }}">view</a></td>
-        <td><a href="/wiki/_edit{{ wiki.path }}?v={{ wiki.version }}">edit</a></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-</table>
-<!-- 
-<div id="content">
-  {% for post in content %}
-  <h2>{{ post.path }} </h2>
-  <p> {{post.content[:100]}} </p>
-  {% endfor %}
-</div> -->
+<div>
+  <table >
+      <thead>
+        <tr>
+          <th>Version</th>
+          <th>Created</th>
+          <th>Content</th>
+          <th>View</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for wiki in content %}
+        <tr class="wiki">
+          <td>{{ wiki.version }}</td>
+          <td>{{ wiki.created.strftime("%c") }}</td>
+          <td>{{ wiki.content[:100] }}</td>
+          <td><a href="/wiki{{ wiki.path }}?v={{ wiki.version }}">view</a></td>
+          <td><a href="/wiki/_edit{{ wiki.path }}?v={{ wiki.version }}">edit</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+</div>
+
 {% endblock %}

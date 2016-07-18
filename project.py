@@ -48,8 +48,8 @@ class Handler(webapp2.RequestHandler):
 
     def render_json(self, d):
         json_txt = json.dumps(d)
-        self.response.headers['Content-Type'] = 'application/json; charset=UTF-8'
-        self.write(json_txt)
+        # self.response.headers['Content-Type'] = 'application/json; charset=UTF-8'
+        self.render("json.html", json = json_txt)
 
     def set_secure_cookie(self, name, val):
         cookie_val = make_secure_val(val)
@@ -202,7 +202,10 @@ class PostPage(Handler):
         post, age = single_cache(post_id)        
 
         if self.format == 'html':
-            self.render("permalink.html", post = post, age = age_str(age), user = user.name)
+            if user:
+                self.render("permalink.html", post = post, age = age_str(age), user = user.name)
+            else:
+                self.render("permalink.html", post = post, age = age_str(age))
         else:
             self.render_json(post.as_dict())
 
@@ -215,7 +218,8 @@ class NewPost(Handler):
             self.redirect("/login")
 
     def post(self):
-        if not self.user:
+        user = self.user
+        if not user:
             self.redirect('/blog')
 
         subject = self.request.get('subject')
@@ -228,7 +232,7 @@ class NewPost(Handler):
             self.redirect('/blog/%s' % str(p.key().id()))
         else:
             error = "subject and content, please!"
-            self.render("newpost.html", subject=subject, content=content, error=error, user = self.user)
+            self.render("newpost.html", subject=subject, content=content, error=error, user = user.name)
 
 class Flush(Handler):
     def get(self):
@@ -254,9 +258,9 @@ class WikiMainPage(Handler):
 
         user = self.user
         if user:
-            self.render("main.html", wikis = wikis, user = user.name)
+            self.render("wiki.html", wikis = wikis, user = user.name)
         else:
-            self.render("main.html", wikis = wikis)
+            self.render("wiki.html", wikis = wikis)
 
 
 class WikiPost(Handler):
@@ -351,6 +355,10 @@ class Signup(Handler):
 
     def post(self):
         next_url = str(self.request.get('next_url'))
+
+        if next_url.endswith("/login") or next_url.endswith("/signup"):
+            next_url = "/"
+
         have_error = False        
 
         self.username = self.request.get('username')
@@ -359,7 +367,7 @@ class Signup(Handler):
         self.email = self.request.get('email')
 
         params = dict(username = self.username,
-                      email = self.email)
+                      email = self.email, password = self.password)
 
         if not valid_username(self.username):
             params['error_username'] = "That's not a valid username."
@@ -377,14 +385,15 @@ class Signup(Handler):
             have_error = True
 
         if have_error:
-            self.render('signup-form.html', **params)
+            self.render('signup-form.html', next_url = next_url, **params)
 
         else:
             
             u = User.by_name(self.username)
             if u:
                 msg = 'That user already exists.'
-                self.render('signup-form.html', error_username = msg)
+                
+                self.render('signup-form.html', next_url = next_url, error_username = msg, **params)
             else:
 
                 u = User.register(self.username, self.password, self.email)
@@ -401,6 +410,9 @@ class Login(Handler):
 
     def post(self):
         next_url = str(self.request.get('next_url'))
+        if next_url.endswith("/login") or next_url.endswith("/signup"):
+            next_url = "/"        
+
 
         username = self.request.get('username')
         password = self.request.get('password')
@@ -411,7 +423,7 @@ class Login(Handler):
             self.redirect(next_url)
         else:
             msg = 'Invalid login'
-            self.render('login-form.html', error = msg)
+            self.render('login-form.html', username = username, password = password, next_url = next_url, error = msg)
 
 
 class Logout(Handler):
@@ -564,11 +576,6 @@ def isWord(word):
     word: a possible word.
     returns True if word is in wordList.
 
-    Example:
-    >>> isWord( 'bat') returns
-    True
-    >>> isWord('asdf') returns
-    False
     """
     inFile = open('words.txt', 'r')
     wordList = inFile.read().split()

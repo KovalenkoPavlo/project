@@ -2,7 +2,11 @@
 <head>
 <title> Hello </title>
 <link rel="stylesheet" href="../static/styles.css">
+<link rel="stylesheet" href="/static/bootstrap.min.css">
+
 <script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src='../static/jquery-2.2.2.min.js'></script>
+<script src='../static/bootstrap.min.js'></script>
 <script type='text/javascript' src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
 <script type='text/javascript' src="http://cdn3.devexpress.com/jslib/13.1.5/js/dx.chartjs.js"></script>
 
@@ -63,18 +67,55 @@ $(document).ready(function(){
 </head>
 <body>
 
+<nav class="navbar navbar-primary navbar-fixed-top bg-info">
+        <div class="container-fluid">
+            <div class="navbar-header ">
+                <a href="/" class="navbar-brand">Home</a>
+            </div>
+
+        
+            <div class="navbar-text">
+                <a class="navbar-link" href="/wiki">
+                Wiki
+                </a>
+            </div>
+
+            <div class="navbar-text">
+                <a class="navbar-link" href="/blog">
+                Blog
+                </a>
+            </div>
+
+            <div class="navbar-text">
+                <a class="navbar-link" href="/blog.json">
+                Blog's JSON
+                </a>
+            </div>
+
+            <div class="navbar-text">
+                <a class="navbar-link" href="/cipher">
+                Cipher App
+                </a>
+            </div>
+
+
+        </div>
+    </nav>
+    
+
 <div class="main">
-    <div class="top">Enter you cipher in textarea</div>
+    <div class="top">Enter you English cipher in textarea and digit as the rotation number in rotation section</div>
     <div class="form" id="form" >
         <div class="textblock">
             <div>
-                <textarea name="text" id="newtext" placeholder="Enter the cipher here"></textarea>
+                <textarea name="text" id="newtext" placeholder="Enter the cipher here" value="{{text}}"></textarea>
             </div>
         </div>
         <div class="btnblock">
             <div>
                 <div style="text-align:center;">
-                    <input type="text" name="rotation" id= "rotation" placeholder="Enter a rotation number here"/>
+                    <input type="text" name="rotation" id= "rotation" placeholder="Enter a rotation number" value="{{shift}}"/>
+                    <div> {{error_shift}} </div>
                 </div>
                 
                 <div style="margin: 20px;text-align: center;">
@@ -88,6 +129,9 @@ $(document).ready(function(){
                 <textarea name="text2" id="newtext2" readonly></textarea>
             </div>
         </div>
+    </div>
+    <div>
+        {{error_text}}
     </div>
 
     <div id="chartContainer" ></div>
